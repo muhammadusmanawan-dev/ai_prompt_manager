@@ -1,30 +1,47 @@
 from django.db import transaction
 from .models import Prompt, PromptHistory
 
-class PromptService:
 
+class PromptService:
     @staticmethod
     @transaction.atomic
-    def create_prompt(user, validated_data):
-        prompt = Prompt.objects.create(user=user, **validated_data)
+    def create_prompt(user, category, title, description, content, is_public=False):
+        prompt = Prompt.objects.create(
+            user=user,
+            category=category,
+            title=title,
+            description=description,
+            content=content,
+            is_public=is_public,
+            current_version=1
+        )
+
         PromptHistory.objects.create(
             prompt=prompt,
             version_number=1,
-            title=prompt.title,
-            content=prompt.content,
-            change_description="Initial creation"
+            title=title,
+            content=content,
+            change_description="Initial draft created."
         )
+
         return prompt
 
     @staticmethod
     @transaction.atomic
-    def update_prompt(prompt, validated_data, change_description="Updated prompt details"):
-        content_changed = 'content' in validated_data and validated_data['content'] != prompt.content
-        title_changed = 'title' in validated_data and validated_data['title'] != prompt.title
+    def update_prompt(prompt, title=None, description=None, content=None, is_public=None, change_description=""):
+        content_changed = content is not None and content != prompt.content
+        title_changed = title is not None and title != prompt.title
 
-        for key, value in validated_data.items():
-            setattr(prompt, key, value)
+        if title is not None:
+            prompt.title = title
+        if description is not None:
+            prompt.description = description
+        if content is not None:
+            prompt.content = content
+        if is_public is not None:
+            prompt.is_public = is_public
 
+        # Increment version only if title or core content modified
         if content_changed or title_changed:
             prompt.current_version += 1
             PromptHistory.objects.create(
@@ -32,7 +49,7 @@ class PromptService:
                 version_number=prompt.current_version,
                 title=prompt.title,
                 content=prompt.content,
-                change_description=change_description
+                change_description=change_description or f"Updated to version {prompt.current_version}"
             )
 
         prompt.save()
