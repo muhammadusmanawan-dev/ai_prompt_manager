@@ -1,9 +1,5 @@
-venv
-
-# Database
-db.sqlite3
-
-# Python bytecode/cache
-__pycache__/
-
+venv/
 *.pyc
+__pycache__/
+db.sqlite3
+.env
