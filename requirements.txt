@@ -1,3 +1,6 @@
-django
-dotenv
+django>=5.2,<6.0
+python-dotenv
 djangorestframework
+django-filter
+openai
+anthropic

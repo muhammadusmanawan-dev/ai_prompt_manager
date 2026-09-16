@@ -28,12 +28,14 @@ class PromptService:
 
     @staticmethod
     @transaction.atomic
-    def update_prompt(prompt, title=None, description=None, content=None, is_public=None, change_description=""):
+    def update_prompt(prompt, category=None, title=None, description=None, content=None, is_public=None, change_description=""):
         content_changed = content is not None and content != prompt.content
         title_changed = title is not None and title != prompt.title
 
         if title is not None:
             prompt.title = title
+        if category is not None:
+            prompt.category = category
         if description is not None:
             prompt.description = description
         if content is not None:

@@ -1,5 +1,28 @@
-venv/
+# Python-related files
 *.pyc
+*.pyo
+*.pyd
 __pycache__/
-db.sqlite3
+*.sqlite3
+
+# Environment variables
 .env
+
+# Django-related files
+db.sqlite3
+*.log
+
+# IDE-specific files
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+.venv/
+venv/
+
+# Django Static and Media Uploads
+media/
+staticfiles/
