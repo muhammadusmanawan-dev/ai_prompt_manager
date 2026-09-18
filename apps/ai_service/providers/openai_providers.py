@@ -4,7 +4,8 @@ from .base import BaseAIProvider
 
 class OpenAIProvider(BaseAIProvider):
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.api_key = os.getenv("GEMINI_API_KEY", os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=self.api_key)
         self.model = "gpt-4o-mini"
 
     def improve_prompt(self, prompt_content, instructions=""):

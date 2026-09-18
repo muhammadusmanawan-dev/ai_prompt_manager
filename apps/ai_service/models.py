@@ -10,8 +10,8 @@ class AIExecutionLog(models.Model):
         on_delete=models.CASCADE, 
         related_name='ai_logs'
     )
-    provider = models.CharField(max_length=50)  # e.g., 'openai', 'anthropic'
-    action_type = models.CharField(max_length=50)  # e.g., 'improve', 'generate'
+    provider = models.CharField(max_length=50)
+    action_type = models.CharField(max_length=50)
     input_text = models.TextField()
     output_text = models.TextField(blank=True, null=True)
     tokens_used = models.IntegerField(default=0)

@@ -14,12 +14,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'password']
+        fields = ['id', 'email', 'username', 'password']
         read_only_fields = ['id']
 
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data['email'],
+            username=validated_data['username'],
             password=validated_data['password']
         )
         return user

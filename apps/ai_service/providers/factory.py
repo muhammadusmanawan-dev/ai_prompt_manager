@@ -3,6 +3,7 @@ from .openai_providers import OpenAIProvider
 class AIProviderFactory:
     _providers = {
         'openai': OpenAIProvider,
+        'gemini': OpenAIProvider,
     }
 
     @classmethod
